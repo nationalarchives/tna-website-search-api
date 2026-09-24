@@ -1,0 +1,11 @@
+.DS_Store
+.idea/
+.vscode/
+*.egg-info
+dist
+node_modules
+venv
+.venv
+test-results
+__pycache__
+site
