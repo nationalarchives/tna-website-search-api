@@ -1,0 +1,34 @@
+[project]
+name = "tna-website-search-api"
+version = "0.1.0"
+description = "Discover Django and Flask pages and expose normalized route metadata."
+readme = "README.md"
+requires-python = ">=3.12"
+license = "MIT"
+authors = [
+    {name = "James Biggs", email="james.biggs@nationalarchives.gov.uk"}
+]
+dependencies = []
+
+[project.optional-dependencies]
+django = ["Django>=6.0"]
+flask = ["Flask>=3.1"]
+all = ["Django>=6.0", "Flask>=3.1"]
+dev = [
+  "build>=1.6",
+  "Django>=6.0",
+  "Flask>=3.1",
+  "pytest>=9.1",
+  "pytest-django>=4.14",
+]
+
+[build-system]
+requires = ["hatchling>=1.32"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["tna_website_search_api"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+DJANGO_SETTINGS_MODULE = "tests.django.settings"
