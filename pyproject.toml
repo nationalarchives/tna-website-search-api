@@ -11,15 +11,16 @@ authors = [
 dependencies = []
 
 [project.optional-dependencies]
-django = ["Django>=6.0"]
-flask = ["Flask>=3.1"]
-all = ["Django>=6.0", "Flask>=3.1"]
+django = ["Django>=6.0", "pydantic >= 2.13"]
+flask = ["Flask>=3.1", "pydantic >= 2.13"]
+all = ["Django>=6.0", "Flask>=3.1", "pydantic >= 2.13"]
 dev = [
   "build>=1.6",
   "Django>=6.0",
   "Flask>=3.1",
   "pytest>=9.1",
   "pytest-django>=4.14",
+  "pydantic >= 2.13"
 ]
 
 [build-system]
