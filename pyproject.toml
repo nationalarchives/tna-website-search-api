@@ -8,19 +8,18 @@ license = "MIT"
 authors = [
     {name = "James Biggs", email="james.biggs@nationalarchives.gov.uk"}
 ]
-dependencies = []
+dependencies = ["pydantic >= 2.13"]
 
 [project.optional-dependencies]
-django = ["Django>=6.0", "pydantic >= 2.13"]
-flask = ["Flask>=3.1", "pydantic >= 2.13"]
-all = ["Django>=6.0", "Flask>=3.1", "pydantic >= 2.13"]
+django = ["Django>=6.0"]
+flask = ["Flask>=3.1"]
+all = ["Django>=6.0", "Flask>=3.1"]
 dev = [
   "build>=1.6",
   "Django>=6.0",
   "Flask>=3.1",
   "pytest>=9.1",
   "pytest-django>=4.14",
-  "pydantic >= 2.13"
 ]
 
 [build-system]
