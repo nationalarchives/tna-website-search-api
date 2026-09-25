@@ -8,7 +8,7 @@ license = "MIT"
 authors = [
     {name = "James Biggs", email="james.biggs@nationalarchives.gov.uk"}
 ]
-dependencies = ["pydantic >= 2.13"]
+dependencies = ["pydantic>=2.13", "tna-utilities>=1.9"]
 
 [project.optional-dependencies]
 django = ["Django>=6.0"]
