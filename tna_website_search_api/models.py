@@ -13,7 +13,7 @@ class ApplicationPage(BaseModel):
     description: str
     teaser_image: HttpUrl | None = None
     weighting: int = 0
-    tags: list[str] | None = None
+    tags: list[str] = []
 
 
 class Application(BaseModel):

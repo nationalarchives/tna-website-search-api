@@ -18,14 +18,17 @@ def searchable(view) -> callable:
     view.__search_index__ = True
     return view
 
-def page_detail(title: str, description: str) -> callable:
+def page_detail(title: str, description: str, teaser_image: str | None = None, weighting: int = 0, tags: list[str] = []) -> callable:
     """
-    Flask decorator to attach a title and description to a view/route, used in the API output.
+    Flask decorator to attach a title, description, teaser image, weighting, and tags to a view/route, used in the API output.
     """
 
     def decorator(view) -> callable:
         view.__page_title__ = title
         view.__page_description__ = description
+        view.__teaser_image__ = teaser_image
+        view.__weighting__ = weighting
+        view.__tags__ = tags
         return view
 
     return decorator
