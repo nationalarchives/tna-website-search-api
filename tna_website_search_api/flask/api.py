@@ -9,7 +9,7 @@ def discover_routes(app) -> list[ApplicationPage]:
 
     for rule in app.url_map.iter_rules():
         view = app.view_functions[rule.endpoint]
-        if WebsiteSearchAPIConfig.INCLUDE_ROUTES_BY_DEFAULT:
+        if app.config["INCLUDE_ROUTES_BY_DEFAULT"]:
             if hasattr(view, "__search_index__") and not view.__search_index__:
                 continue
         else:
@@ -36,7 +36,6 @@ def display_application(app) -> Application:
 
 bp = Blueprint("website_search_api", __name__)
 
-
 @bp.get("/pages")
 @not_searchable
 def pages_view():
@@ -55,7 +54,14 @@ def register_api(app, url_prefix: str | None = None) -> None:
     url_prefix is used to add a prefix to the API endpoint URLs, for example url_prefix="our-application-route"
     would result in the API endpoint being available at "/our-application-route/api/pages".
     """
-    if not WebsiteSearchAPIConfig.WEBSITE_SEARCH_API_ENABLED:
+    for name in (
+        "INCLUDE_ROUTES_BY_DEFAULT",
+        "WEBSITE_SEARCH_API_ENABLED",
+        "WEBSITE_SEARCH_API_PREFIX",
+    ):
+        app.config.setdefault(name, getattr(WebsiteSearchAPIConfig, name))
+
+    if not app.config["WEBSITE_SEARCH_API_ENABLED"]:
         return
     prefix = url_prefix.rstrip("/") if url_prefix else ""
-    app.register_blueprint(bp, url_prefix=prefix + WebsiteSearchAPIConfig.WEBSITE_SEARCH_API_PREFIX)
+    app.register_blueprint(bp, url_prefix=prefix + app.config["WEBSITE_SEARCH_API_PREFIX"])
