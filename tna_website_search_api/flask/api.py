@@ -1,5 +1,8 @@
+from flask import Blueprint, current_app, jsonify
+
 from tna_website_search_api.models import ApplicationPage
 from tna_website_search_api.flask.config import WebsiteSearchAPIConfig
+from tna_website_search_api.flask.decorators import not_searchable
 
 def discover_routes(app) -> list[ApplicationPage]:
     routes = []
@@ -23,3 +26,25 @@ def discover_routes(app) -> list[ApplicationPage]:
             )
         )
     return routes
+
+
+bp = Blueprint("website_search_api", __name__)
+
+
+@bp.get("/pages")
+@not_searchable
+def pages_view():
+    return jsonify([page.model_dump(mode="json") for page in discover_routes(current_app)])
+
+
+def register_api(app, url_prefix: str | None = None) -> None:
+    """
+    Register the website search API endpoint on a Flask app.
+
+    url_prefix is used to add a prefix to the API endpoint URLs, for example url_prefix="our-application-route"
+    would result in the API endpoint being available at "/our-application-route/api/pages".
+    """
+    if not WebsiteSearchAPIConfig.WEBSITE_SEARCH_API_ENABLED:
+        return
+    prefix = url_prefix.rstrip("/") if url_prefix else ""
+    app.register_blueprint(bp, url_prefix=prefix + WebsiteSearchAPIConfig.WEBSITE_SEARCH_API_PREFIX)
