@@ -1,6 +1,6 @@
 from flask import Blueprint, current_app, jsonify
 
-from tna_website_search_api.models import ApplicationPage
+from tna_website_search_api.models import ApplicationPage, Application
 from tna_website_search_api.flask.config import WebsiteSearchAPIConfig
 from tna_website_search_api.flask.decorators import not_searchable
 
@@ -27,6 +27,12 @@ def discover_routes(app) -> list[ApplicationPage]:
         )
     return routes
 
+def display_application(app) -> Application:
+    return Application(
+        **app.config["WEBSITE_SEARCH_APPLICATION_METADATA"],
+        pages=discover_routes(app)
+    )
+
 
 bp = Blueprint("website_search_api", __name__)
 
@@ -35,6 +41,11 @@ bp = Blueprint("website_search_api", __name__)
 @not_searchable
 def pages_view():
     return jsonify([page.model_dump(mode="json") for page in discover_routes(current_app)])
+
+@bp.get("/application")
+@not_searchable
+def application_view():
+    return jsonify(display_application(current_app).model_dump(mode="json"))
 
 
 def register_api(app, url_prefix: str | None = None) -> None:
