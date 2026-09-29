@@ -12,6 +12,8 @@ class ApplicationPage(BaseModel):
     url: str # e.g. "/about"
     description: str
     teaser_image: HttpUrl | None = None
+    weighting: int = 0
+    tags: list[str] | None = None
 
 
 class Application(BaseModel):
