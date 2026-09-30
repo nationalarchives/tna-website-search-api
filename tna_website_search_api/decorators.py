@@ -1,6 +1,6 @@
 def not_searchable(view) -> callable:
     """
-    Flask decorator to denote a view/route as "not searchable", which will exclude it from the API.
+    Decorator to denote a view/route as "not searchable", which will exclude it from the API.
 
     To be used in conjunction with INCLUDE_ROUTES_BY_DEFAULT=True, to explicitly mark routes as not searchable.
 
@@ -11,7 +11,7 @@ def not_searchable(view) -> callable:
 
 def searchable(view) -> callable:
     """
-    Flask decorator to denote a view/route as "searchable", which will expose it to the API.
+    Decorator to denote a view/route as "searchable", which will expose it to the API.
 
     To be used in conjunction with INCLUDE_ROUTES_BY_DEFAULT=False, to explicitly mark routes as searchable.
     """
@@ -20,7 +20,7 @@ def searchable(view) -> callable:
 
 def page_detail(title: str, description: str, teaser_image: str | None = None, weighting: int = 0, tags: list[str] = []) -> callable:
     """
-    Flask decorator to attach a title, description, teaser image, weighting, and tags to a view/route, used in the API output.
+    Decorator to attach a title, description, teaser image, weighting, and tags to a view/route, used in the API output.
     """
 
     def decorator(view) -> callable:
